@@ -87,7 +87,10 @@ addmap1 = map (+1)
 addmap2 = map (\x -> x + 1)
 
 myfold f a [] = a
-myfold f a (x : xs) = f a ((myfold f x) xs)
+myfold f a (x : xs) = f x (myfold f a xs)
+
+len = myfold count 0
+      where count a n = n + 1
 
 rsum = foldr (+) 0
 lsum = foldl (+) 0
