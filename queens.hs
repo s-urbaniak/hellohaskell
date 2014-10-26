@@ -1,3 +1,5 @@
+import Data.List
+
 check (i,j) (m,n) = (j == n) || (i + j == m + n) || (i - j == m - n)
 
 safe p n = and [not (check (i,j) (m,n)) | (i,j) <- zip [1..length p] p]
@@ -13,3 +15,7 @@ sneeuq m = [p ++ [n] | n <- [1..8],
                        p <- ps,
                        safe p n]
            where ps = sneeuq (m-1)
+
+listValues xs = map (map xs)
+
+main = putStrLn (intercalate " " ["[" ++ intercalate " " (map show xs) ++ "]" | xs <- queens 8])
