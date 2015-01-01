@@ -6,6 +6,22 @@ module Lab4 where
 
 import Data.Char
 
+dup a = (a, a)
+ddup :: (a) -> ((((a), (a)), ((a), (a))), (((a), (a)), ((a), (a))))
+ddup = dup . dup . dup
+
+-- (a -> (b -> a)) -> (a -> (b -> b))
+-- ((b -> a) -> a) -> ((b -> a) -> b)
+h :: ((a -> b) -> a) -> ((a -> b) -> b)
+-- ((a -> b -> a) -> a -> b -> b)
+h g f = (f . g) $ f
+
+fix = h fix
+
+-- f = \f n -> if (n == 0) then 1 else n * f (n - 1)
+
+k f = fix $ f
+
 -- ===================================
 -- Ex. 0
 -- ===================================
@@ -50,6 +66,13 @@ euclid (x, y)
 -- ===================================
 -- Ex. 3
 -- ===================================
+idx xs = [(x,y) | (x,y) <- zip xs [0..]]
 
 funkyMap :: (a -> b) -> (a -> b) -> [a] -> [b]
-funkyMap f g xs = undefined
+funkyMap f g xs = funkyMap2 f g $ idx xs
+
+funkyMap2 f g [] = []
+funkyMap2 f g ((x,y) : xs)
+  | even y = f x : funkyMap2 f g xs
+  | odd  y = g x : funkyMap2 f g xs
+

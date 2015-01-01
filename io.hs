@@ -77,3 +77,7 @@ foldRightM f a (x : xs) = do xn <- foldRightM f a xs
                              f x xn
 
 -- foldRightM (\a b -> putChar a >> return (a : b)) [] (show [1,3..10]) >>= \r -> putStrLn r
+
+-- liftM :: Monad m => (a -> b) -> m a -> m b
+-- liftM f m = m >> \ a -> return (f a)
+
